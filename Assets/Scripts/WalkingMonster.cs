@@ -8,7 +8,8 @@ public class WalkingMonster : Entity
     private Vector3 dir;
     private SpriteRenderer sprite;
  //   private Rigidbody2D rb;
-
+ private bool isFacingRight = true;
+ 
     private void Start()
     {
         dir = transform.right;
@@ -16,13 +17,11 @@ public class WalkingMonster : Entity
 
       lives = 5;
     }
-
     
     private void Awake()
     {
         sprite = GetComponentInChildren<SpriteRenderer>();
     }
-    
     
     private void Update()
     {
@@ -35,14 +34,29 @@ public class WalkingMonster : Entity
         if (colliders.Length > 0) dir *= -1f;
 
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, Time.deltaTime);
-        sprite.flipX = dir.x > 0.0f;
-
+            // sprite.flipX = dir.x > 0.0f;
+            if ((dir.x > 0f && !isFacingRight) || (dir.x < 0f && isFacingRight))
+            {
+                Flip();
+            }
     }
+    private void Flip()
+    {
+        // меняем направление спрайта
+        isFacingRight = !isFacingRight;
+
+        // поворачиваем спрайт
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject == Hero.Instance.gameObject)
         {
             Hero.Instance.GetDamage();
+            //OnTrigger
         }
     }
 }

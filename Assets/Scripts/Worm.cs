@@ -7,7 +7,7 @@ public class Worm : Entity
 
     private void Start()
     {
-        lives = 3;
+        lives = 1;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

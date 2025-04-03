@@ -11,8 +11,23 @@ public class Entity : MonoBehaviour
       if (lives < 1)
          Die();
    }
+
+   public int GetHeal()
+   {
+      int temp = lives;
+      temp++;
+      return temp;
+   }
    public virtual void Die()
    {
       Destroy(this.gameObject);
    }
+
+   /*private void OnTriggerEnter2D(Collider2D collision)
+   {
+      if (collision.CompareTag("Player"))
+      {
+         HealthSystem.health -= 1;
+      }
+   }*/
 }
